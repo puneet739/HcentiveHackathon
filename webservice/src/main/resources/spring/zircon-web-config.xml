@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+                http://www.springframework.org/schema/beans/spring-beans.xsd
+                http://cxf.apache.org/jaxrs
+                http://cxf.apache.org/schemas/jaxrs.xsd">
+
+	<import resource="classpath:META-INF/cxf/cxf.xml" />
+	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+
+	<bean id="zirconHandler" class="com.propertyplayer.zircon.exception.ZirconExceptionHandler"/>
+	<bean id="authHandler" class="com.propertyplayer.zircon.exception.AuthExceptionHandler"/>
+	
+	<!-- Client Endpoint Services -->
+	<import resource="classpath:endpointconfig/login-endpoint.xml"/>
+	<import resource="classpath:endpointconfig/user-endpoint.xml"/>
+	<import resource="classpath:endpointconfig/vehicle-endpoint.xml"/>
+	<import resource="classpath:endpointconfig/social-endpoint.xml"/>
+	
+	<import resource="classpath:endpointconfig/generic-endpoint.xml"/>
+	<!-- Master EndpointServices -->
+	<import resource="classpath:endpointconfig/society-endpoint.xml"/>
+	<import resource="classpath:endpointconfig/upload-endpoint.xml"/>
+	
+	<!-- HTML Render Endpoint -->	
+	<import resource="classpath:endpointconfig/html-render-endpoint.xml"/>
+	
+	<!-- Helpdesk Endpoint -->	
+	<import resource="classpath:endpointconfig/helpdesk-endpoint.xml"/>
+	
+	<!-- Checkout Endpoint -->	
+	<import resource="classpath:endpointconfig/checkout-endpoint.xml"/>
+	
+</beans>
+    

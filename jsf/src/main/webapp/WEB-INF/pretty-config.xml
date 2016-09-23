@@ -7,5 +7,10 @@
 		<pattern value="/home" />
 		<view-id value="/views/hackathon/homepage.xhtml" />
 	</url-mapping>
+	
+	<url-mapping id="homepage">
+		<pattern value="/" />
+		<view-id value="/views/hackathon/homepage.xhtml" />
+	</url-mapping>
 
 </pretty-config>

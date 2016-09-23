@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://cxf.apache.org/jaxrs  
+                           http://cxf.apache.org/schemas/jaxrs.xsd">
+
+	<bean id="feedbackController"
+		class="com.propertyplayer.zircon.controller.FeedbackController"/>
+	<bean id="commentController"
+		class="com.propertyplayer.zircon.controller.CommentController"/>
+	<bean id="pushNotificationController"
+		class="com.propertyplayer.zircon.controller.NotificationController"/>
+	<bean id="storeController"
+		class="com.propertyplayer.zircon.controller.StoreController"/>
+	<bean id="storesuggestionController"
+		class="com.propertyplayer.zircon.controller.SuggestionController"/>
+
+	<bean id="genericexculsion"
+		class="com.propertyplayer.zircon.gson.exculsion.CustomExculsionStrategy">
+		<property name="regexPattern" value="^password|userRoleses||lastlogin$" />
+	</bean>
+
+	<bean id="genericProvider" class="com.propertyplayer.zircon.util.GsonMessageBodyHandler">
+		<property name="exculsionStrategy" ref="genericexculsion"/>
+	</bean>
+	
+	<jaxrs:server id="generic" address="/services/v1/">
+		<jaxrs:properties>
+			<entry key="org.apache.cxf.propagate.exception" value="true" />
+		</jaxrs:properties>
+		<jaxrs:serviceBeans>
+			<ref bean="feedbackController" />
+			<ref bean="commentController" />
+			<ref bean="pushNotificationController"/>
+			<ref bean="storeController"/>
+			<ref bean="storesuggestionController"/>
+		</jaxrs:serviceBeans>
+		<jaxrs:providers>
+			<ref bean="genericProvider" />
+			<ref bean="zirconHandler"/>
+		</jaxrs:providers>
+		<jaxrs:extensionMappings>
+			<entry key="json" value="application/json" />
+			<entry key="xml" value="application/xml" />
+			<entry key="json" value="text/html" />
+			<entry key="feed" value="application/atom+xml" />
+		</jaxrs:extensionMappings>
+	</jaxrs:server>
+	
+</beans>

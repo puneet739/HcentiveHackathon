@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/data/mongo
+       http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd">
+
+
+ 	<mongo:mongo replica-set="${zircon.mongo.replicaset}" id="mongo">
+        <mongo:options connections-per-host="${zircon.mongo.connectionsPerHost}"
+                       threads-allowed-to-block-for-connection-multiplier="${zircon.mongo.threadsAllowedToBlockForConnectionMultiplier}"
+                       connect-timeout="${zircon.mongo.connectTimeout}"
+                       max-wait-time="${zircon.mongo.maxWaitTime}"
+                       auto-connect-retry="${zircon.mongo.autoConnectRetry}"
+                       socket-keep-alive="${zircon.mongo.socketKeepAlive}"
+                       socket-timeout="${zircon.mongo.socketTimeout}"
+                       slave-ok="${zircon.mongo.slaveOk}"
+                       write-number="${zircon.mongo.writeNumber}"
+                       write-timeout="${zircon.mongo.writeTimeout}"
+                       write-fsync="${zircon.mongo.writeFSync}"/>
+    </mongo:mongo>
+    
+    <mongo:db-factory dbname="${zircon.mongo.dbname}" mongo-ref="mongo" id="mongoDbFactory" username="${zircon.mongo.dbuser}"
+                      password="${zircon.mongo.dbpassword}"/>
+	
+	<bean id="mappingContext" class="org.springframework.data.mongodb.core.mapping.MongoMappingContext" />
+
+    <bean id="defaultMongoTypeMapper"
+          class="org.springframework.data.mongodb.core.convert.DefaultMongoTypeMapper">
+        <constructor-arg name="typeKey"><null/></constructor-arg>
+    </bean>
+    
+    <bean id="mappingMongoConverter" class="org.springframework.data.mongodb.core.convert.MappingMongoConverter">
+        <constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
+        <constructor-arg name="mappingContext" ref="mappingContext" />
+        <property name="typeMapper" ref="defaultMongoTypeMapper" />
+    </bean>
+
+    <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+        <constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
+        <constructor-arg name="mongoConverter" ref="mappingMongoConverter" />
+    </bean>
+
+	<bean id="helpdesk" class="com.propertyplayer.zircon.service.mongo.impl.HelpdeskServiceImpl"/>	
+	<bean id="htmlservice" class="com.propertyplayer.zircon.service.mongo.impl.HtmlSnapShotServiceImpl"/>	
+
+</beans>

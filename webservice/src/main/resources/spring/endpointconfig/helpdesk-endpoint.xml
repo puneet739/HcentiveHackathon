@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://cxf.apache.org/jaxrs  
+                           http://cxf.apache.org/schemas/jaxrs.xsd">
+	
+	<bean id="helpdeskexculsion"
+		class="com.propertyplayer.zircon.gson.exculsion.CustomExculsionStrategy">
+		<property name="regexPattern" value="^$" />
+	</bean>
+	
+	<bean id="helpdeskProvider" class="com.propertyplayer.zircon.util.GsonMessageBodyHandler">
+		<property name="exculsionStrategy" ref="helpdeskexculsion"/>
+	</bean>
+
+	<bean id="helpdeskcontroller"
+		class="com.propertyplayer.zircon.controller.HelpdeskController" />
+
+	<jaxrs:server id="helpdeskws" address="/services/helpdesk/">
+		<jaxrs:properties>
+			<entry key="org.apache.cxf.propagate.exception" value="true" />
+		</jaxrs:properties>
+		<jaxrs:serviceBeans>
+			<ref bean="helpdeskcontroller" />
+		</jaxrs:serviceBeans>
+		<jaxrs:providers>
+			<ref bean="helpdeskProvider" />
+			<ref bean="zirconHandler"/>
+		</jaxrs:providers>
+		<jaxrs:extensionMappings>
+			<entry key="json" value="application/json" />
+			<entry key="xml" value="application/xml" />
+			<entry key="html" value="text/html" />
+			<entry key="feed" value="application/atom+xml" />
+		</jaxrs:extensionMappings>
+	</jaxrs:server>
+	
+</beans>

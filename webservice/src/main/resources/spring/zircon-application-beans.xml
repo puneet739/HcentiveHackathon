@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+                http://www.springframework.org/schema/beans/spring-beans.xsd
+                http://www.springframework.org/schema/task
+				http://www.springframework.org/schema/task/spring-task.xsd">
+
+	<!-- Enabling Task and crons from here -->
+	<task:annotation-driven />
+	
+	
+	<bean id="httprequestfactory"
+		class="org.springframework.http.client.HttpComponentsClientHttpRequestFactory">
+		<property name="readTimeout" value="2000" />
+		<property name="connectTimeout" value="2000" />
+	</bean>
+
+	<bean class="org.springframework.web.client.RestTemplate">
+	</bean>
+
+	<!-- THYMELEAF: Template Engine (Spring3-specific version) -->
+	<bean id="templateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine">
+		<property name="templateResolvers">
+			<set>
+				<ref bean="emailTemplateResolver" />
+			</set>
+		</property>
+	</bean>
+
+	<!-- THYMELEAF: Template Engine (Spring3-specific version) -->
+	<bean id="stringtemplateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine">
+		<property name="templateResolvers">
+			<set>
+				<bean class="org.thymeleaf.templateresolver.StringTemplateResolver"/>
+			</set>
+		</property>
+	</bean> 
+
+
+	<!-- THYMELEAF: Template Resolver for email templates -->
+	<bean id="emailTemplateResolver" class="org.thymeleaf.templateresolver.FileTemplateResolver">
+		<property name="templateMode" value="HTML" />
+		<property name="characterEncoding" value="UTF-8" />
+		<property name="order" value="1" />
+	</bean>
+
+	<bean id="gson" class="com.google.gson.Gson"/>
+</beans>

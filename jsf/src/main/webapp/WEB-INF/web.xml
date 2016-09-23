@@ -77,18 +77,8 @@
 		<param-value>resources.application</param-value>
 	</context-param>
 	
-	<context-param>
-		<param-name>primefaces.PUBLIC_CAPTCHA_KEY</param-name>
-		<param-value>6Lf3EAcTAAAAAPjza2aIqgbk39FmqiDUNaJJB9Su</param-value>
-	</context-param>
-	
-	<context-param>
-		<param-name>primefaces.PRIVATE_CAPTCHA_KEY</param-name>
-		<param-value>6Lf3EAcTAAAAAI9POA1dFQkLEUKLp1rq6MNg_2CD</param-value>
-	</context-param>
-	
 	 <welcome-file-list>
-        <welcome-file>home</welcome-file>
+        <welcome-file>/home</welcome-file>
     </welcome-file-list>
 
 	<session-config>
