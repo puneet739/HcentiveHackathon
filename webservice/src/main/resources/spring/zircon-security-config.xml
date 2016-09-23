@@ -9,78 +9,27 @@
 
 	<global-method-security secured-annotations="enabled" />
 	
-	<http realm="Protected API" use-expressions="true" request-matcher="regex" create-session="stateless"
+	<!-- <http realm="Protected API" use-expressions="true" request-matcher="regex" create-session="stateless"
 		entry-point-ref="unauthorizedEntryPoint" authentication-manager-ref="restAuthenticationManager">
 		<csrf disabled="true"/>
 		
-		<!-- <anonymous enabled="true" /> -->
 		<custom-filter ref="restAuthenticationFilter" position="BASIC_AUTH_FILTER" />
 		
-<!-- 		<intercept-url pattern="/.*/first$" -->
-<!-- 			access="hasAnyAuthority('Admin','Support','User')" /> -->
-<!-- 		<intercept-url pattern="/.*/currentuser$" -->
-<!-- 			access="hasAnyAuthority('Admin','Support','User')" /> -->
-<!-- 		<intercept-url pattern="/.*/setpaymentgateway$" -->
-<!-- 			access="hasAnyAuthority('Admin')" /> -->
-
-		<!-- Real configuration goes here -->
+		Real configuration goes here
 		<intercept-url pattern="/.*/(getalluser|asset/book|getassetbyuser|modifyuser|modify/oldpass.*|complaint.*|getuserwallet.*|asset/get.*)$" access="hasAnyAuthority('USER')" />
 		<intercept-url pattern="/.*/(asset/register|asset/modify|resetpassword|vehicle/add|/user/register|user/sendsms|user/defaulters|notification).*$" access="hasAnyAuthority('SOCIETY_ADMIN')" />
 		<intercept-url pattern="/.*/currentuser" access="hasAnyAuthority('SOCIETY_ADMIN','ADMIN','USER')" />
 		
-		<!-- User Payment method -->
+		User Payment method
 		<intercept-url pattern="/.*/addPayment" access="hasAnyAuthority('SOCIETY_ADMIN','ADMIN')" />
 		
-<!-- 		<intercept-url pattern=".*/register.*" access="hasAnyAuthority('SOCIETY_ADMIN')" /> -->
 		<intercept-url pattern="/user" access="hasAnyAuthority('ADMIN')" />
 
-	</http>
+	</http> -->
 
-	<bean:bean id="unauthorizedEntryPoint"
-		class="com.propertyplayer.zircon.security.UnauthorizedEntryPoint" />
 
-<!-- 	<bean:bean id="userDetailService" -->
-<!-- 		class="com.propertyplayer.zircon.service.UserService"/> -->
 	
-	<bean:bean id="lkpAuthProvider"
-		class="com.propertyplayer.zircon.security.LKPAuthProvider">
-		<bean:property name="tenantHelper" ref="tenantHelper" />
-	</bean:bean>
 	
-	<bean:bean id="socialauthProvider"
-		class="com.propertyplayer.zircon.security.SocialAuthProvider">
-		<bean:property name="tenantHelper" ref="tenantHelper" />
-	</bean:bean>
-
-	<authentication-manager id="restAuthenticationManager">
-		<authentication-provider ref="lkpAuthProvider" />
-	</authentication-manager>
-	
-	<authentication-manager id="socialAuthenticationManager">
-		<authentication-provider ref="socialauthProvider" />
-	</authentication-manager>
-
-	<bean:bean id="tokenManager"
-		class="com.propertyplayer.zircon.security.TokenManagerSingle" />
-
-	<bean:bean id="defaultAuthenticationService"
-		class="com.propertyplayer.zircon.security.AuthenticationServiceDefault"
-		c:authenticationManager-ref="restAuthenticationManager"
-		c:tokenManager-ref="tokenManager"
-		c:tenantHelper-ref="tenantHelper"
-		/>
-		
-	<bean:bean id="socialAuthService"
-		class="com.propertyplayer.zircon.security.AuthenticationServiceDefault"
-		c:authenticationManager-ref="socialAuthenticationManager"
-		c:tokenManager-ref="tokenManager"
-		c:tenantHelper-ref="tenantHelper"
-		/>
-
-	<bean:bean id="restAuthenticationFilter"
-		class="com.propertyplayer.zircon.security.TokenAuthenticationFilter"
-		c:authenticationService-ref="defaultAuthenticationService" 
-		c:logoutLink="/logout" />
 
 
 </bean:beans>

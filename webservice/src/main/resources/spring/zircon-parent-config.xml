@@ -22,10 +22,7 @@
 	<import resource="classpath:zircon-security-config.xml" />
 	<import resource="classpath:zircon-web-config.xml"/>
 	<import resource="classpath:zircon-database-config.xml"/>
-	<import resource="classpath:zircon-tenant-database-config.xml"/>
-	<import resource="classpath:zircon-batch-config.xml"/>
 	<import resource="classpath:zircon-jms-config.xml"/>
 	<import resource="classpath:zircon-mongo-config.xml"/>
-	<import resource="classpath:zircon-social-config.xml"/>
 	
 </beans>
